@@ -38,5 +38,5 @@ deployment:
   quay:
     branch: [master, release]
     commands:
-      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS quay.io
       - cd $SRC_PATH && ./circle_deploy.sh
