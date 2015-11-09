@@ -8,6 +8,12 @@ machine:
     PATH: "$GOROOT/bin:$GOPATH/bin:$HOME/circleutil/scripts:$CACHED_LINT_TOOLS_DIR:$PATH"
     IMPORT_PATH: "github.com/signalfx/phabricator-circleci"
     SRC_PATH: "$GOPATH/src/$IMPORT_PATH"
+    DOCKER_HOST: tcp://localhost:2375
+    DOCKER_PUSH_ENABLED: 1
+  services:
+    - docker
+  pre:
+    - echo 'DOCKER_OPTS="${DOCKER_OPTS} -H tcp://127.0.0.1:2375 -H unix:///var/run/docker.sock"' | sudo tee -a /etc/default/docker
 
 checkout:
   post:
@@ -27,3 +33,12 @@ test:
   override:
     - copy_local_code_to_gopath.sh
     - cd $SRC_PATH && ./circle_check.sh
+
+deployment:
+  production:
+    branch: [master, release]
+    owner: signalfx
+    branch: /feature_.*/
+    commands:
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - cd $SRC_PATH && ./circle_deploy.sh
