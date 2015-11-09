@@ -1,0 +1,146 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"path": "github.com/aws/aws-sdk-go/aws",
+			"revision": "1481c919816453abc15fbe2cd6e071dfc2f188a0",
+			"revisionTime": "2015-10-26T11:11:40-07:00"
+		},
+		{
+			"path": "github.com/aws/aws-sdk-go/aws/awserr",
+			"revision": "1481c919816453abc15fbe2cd6e071dfc2f188a0",
+			"revisionTime": "2015-10-26T11:11:40-07:00"
+		},
+		{
+			"path": "github.com/aws/aws-sdk-go/aws/awsutil",
+			"revision": "1481c919816453abc15fbe2cd6e071dfc2f188a0",
+			"revisionTime": "2015-10-26T11:11:40-07:00"
+		},
+		{
+			"path": "github.com/aws/aws-sdk-go/aws/corehandlers",
+			"revision": "1481c919816453abc15fbe2cd6e071dfc2f188a0",
+			"revisionTime": "2015-10-26T11:11:40-07:00"
+		},
+		{
+			"path": "github.com/aws/aws-sdk-go/aws/credentials",
+			"revision": "1481c919816453abc15fbe2cd6e071dfc2f188a0",
+			"revisionTime": "2015-10-26T11:11:40-07:00"
+		},
+		{
+			"path": "github.com/aws/aws-sdk-go/aws/credentials/ec2rolecreds",
+			"revision": "1481c919816453abc15fbe2cd6e071dfc2f188a0",
+			"revisionTime": "2015-10-26T11:11:40-07:00"
+		},
+		{
+			"path": "github.com/aws/aws-sdk-go/aws/defaults",
+			"revision": "1481c919816453abc15fbe2cd6e071dfc2f188a0",
+			"revisionTime": "2015-10-26T11:11:40-07:00"
+		},
+		{
+			"path": "github.com/aws/aws-sdk-go/aws/ec2metadata",
+			"revision": "1481c919816453abc15fbe2cd6e071dfc2f188a0",
+			"revisionTime": "2015-10-26T11:11:40-07:00"
+		},
+		{
+			"path": "github.com/aws/aws-sdk-go/aws/request",
+			"revision": "1481c919816453abc15fbe2cd6e071dfc2f188a0",
+			"revisionTime": "2015-10-26T11:11:40-07:00"
+		},
+		{
+			"path": "github.com/aws/aws-sdk-go/aws/service",
+			"revision": "1481c919816453abc15fbe2cd6e071dfc2f188a0",
+			"revisionTime": "2015-10-26T11:11:40-07:00"
+		},
+		{
+			"path": "github.com/aws/aws-sdk-go/aws/service/serviceinfo",
+			"revision": "1481c919816453abc15fbe2cd6e071dfc2f188a0",
+			"revisionTime": "2015-10-26T11:11:40-07:00"
+		},
+		{
+			"path": "github.com/aws/aws-sdk-go/private/endpoints",
+			"revision": "1481c919816453abc15fbe2cd6e071dfc2f188a0",
+			"revisionTime": "2015-10-26T11:11:40-07:00"
+		},
+		{
+			"path": "github.com/aws/aws-sdk-go/private/protocol/query",
+			"revision": "1481c919816453abc15fbe2cd6e071dfc2f188a0",
+			"revisionTime": "2015-10-26T11:11:40-07:00"
+		},
+		{
+			"path": "github.com/aws/aws-sdk-go/private/protocol/query/queryutil",
+			"revision": "1481c919816453abc15fbe2cd6e071dfc2f188a0",
+			"revisionTime": "2015-10-26T11:11:40-07:00"
+		},
+		{
+			"path": "github.com/aws/aws-sdk-go/private/protocol/rest",
+			"revision": "1481c919816453abc15fbe2cd6e071dfc2f188a0",
+			"revisionTime": "2015-10-26T11:11:40-07:00"
+		},
+		{
+			"path": "github.com/aws/aws-sdk-go/private/protocol/xml/xmlutil",
+			"revision": "1481c919816453abc15fbe2cd6e071dfc2f188a0",
+			"revisionTime": "2015-10-26T11:11:40-07:00"
+		},
+		{
+			"path": "github.com/aws/aws-sdk-go/private/signer/v4",
+			"revision": "1481c919816453abc15fbe2cd6e071dfc2f188a0",
+			"revisionTime": "2015-10-26T11:11:40-07:00"
+		},
+		{
+			"path": "github.com/aws/aws-sdk-go/service/sqs",
+			"revision": "1481c919816453abc15fbe2cd6e071dfc2f188a0",
+			"revisionTime": "2015-10-26T11:11:40-07:00"
+		},
+		{
+			"path": "github.com/jtolds/gls",
+			"revision": "9a4a02dbe491bef4bab3c24fd9f3087d6c4c6690",
+			"revisionTime": "2015-04-01T00:43:43-06:00"
+		},
+		{
+			"path": "github.com/smartystreets/assertions",
+			"revision": "ac6b6f68ca3d6ac00a360d0fad0c844859ad131b",
+			"revisionTime": "2015-08-10T17:06:21-06:00"
+		},
+		{
+			"path": "github.com/smartystreets/assertions/internal/oglematchers",
+			"revision": "ac6b6f68ca3d6ac00a360d0fad0c844859ad131b",
+			"revisionTime": "2015-08-10T17:06:21-06:00"
+		},
+		{
+			"path": "github.com/smartystreets/goconvey/convey",
+			"revision": "6a613dfb77d9fd2df760901a46339b33694d9bd1",
+			"revisionTime": "2015-09-09T14:07:04-06:00"
+		},
+		{
+			"path": "github.com/smartystreets/goconvey/convey/gotest",
+			"revision": "6a613dfb77d9fd2df760901a46339b33694d9bd1",
+			"revisionTime": "2015-09-09T14:07:04-06:00"
+		},
+		{
+			"path": "github.com/smartystreets/goconvey/convey/reporting",
+			"revision": "6a613dfb77d9fd2df760901a46339b33694d9bd1",
+			"revisionTime": "2015-09-09T14:07:04-06:00"
+		},
+		{
+			"path": "github.com/stretchr/testify/assert",
+			"revision": "e22aedd37671fb115be6c0c25129c405cb575cfd",
+			"revisionTime": "2015-04-20T11:19:11+01:00"
+		},
+		{
+			"path": "github.com/vaughan0/go-ini",
+			"revision": "a98ad7ee00ec53921f08832bc06ecf7fd600e6a1",
+			"revisionTime": "2013-09-23T16:52:12+02:00"
+		},
+		{
+			"path": "golang.org/x/net/context",
+			"revision": "9946ad7d5eae91d8edca4f54d1a1e130a052e823",
+			"revisionTime": "2015-10-20T22:50:55Z"
+		},
+		{
+			"path": "gopkg.in/natefinch/lumberjack.v2",
+			"revision": "588a21fb0fa0ebdfde42670fa214576b6f0f22df",
+			"revisionTime": "2015-05-20T21:52:18-04:00"
+		}
+	]
+}
