@@ -122,6 +122,22 @@ type diffResultTestStruct struct {
 	Message   string
 }
 
+func testResultMsg(cr circleTestResult) diffResultTestStruct {
+	msg := ""
+	if cr.Message != nil {
+		msg = *cr.Message
+	}
+	if len(msg) > 300 {
+		msg = msg[:299] + "... (trimmed output)"
+	}
+	return diffResultTestStruct{
+		Classname: cr.Classname,
+		TestName:  cr.Name,
+		Duration:  time.Duration(int64(cr.RunTime * float64(time.Second.Nanoseconds()))),
+		Message:   msg,
+	}
+}
+
 func (g *circleCiMsg) populateTestResults(ctx context.Context) (diffResultStruct, []harbormasterUnitResult, error) {
 	ciTestResults, err := g.parent.ci.testResults(ctx, g.FormParams.Payload.Username, g.FormParams.Payload.Reponame, g.FormParams.Payload.BuildNum)
 	if err != nil {
@@ -158,19 +174,7 @@ func (g *circleCiMsg) populateTestResults(ctx context.Context) (diffResultStruct
 				tr.Result = unitFail
 				s.FailingTests++
 				if len(s.Tests) < 3 {
-					msg := ""
-					if circleTestResult.Message != nil {
-						msg = *circleTestResult.Message
-					}
-					if len(msg) > 300 {
-						msg = msg[:299] + "... (trimmed output)"
-					}
-					s.Tests = append(s.Tests, diffResultTestStruct{
-						Classname: circleTestResult.Classname,
-						TestName:  circleTestResult.Name,
-						Duration:  time.Duration(int64(circleTestResult.RunTime * float64(time.Second.Nanoseconds()))),
-						Message:   msg,
-					})
+					s.Tests = append(s.Tests, testResultMsg(circleTestResult))
 				}
 			}
 			if circleTestResult.File != nil {
