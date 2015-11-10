@@ -1,7 +1,7 @@
 #!/bin/bash
 set -ex
 
-CIRCLEUTIL_TAG="v1.14"
+CIRCLEUTIL_TAG="v1.15"
 
 export GOPATH_INTO="$HOME/installed_gotools"
 export GOLANG_VERSION="1.5.1"
