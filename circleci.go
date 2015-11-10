@@ -87,8 +87,8 @@ func (g *circleCiMsg) diffIds() (int64, int64) {
 }
 
 var diffResultTemplate = template.Must(template.New("").Parse(
-	`| Build Result | Build time | Test count | Failing tests | Passing tests | Skipped Tests | Build Number
-| ------------ | ---------- |  --------- | ------------- | ------------- | ------------
+`| Build Result | Build time | Test count | Failing tests | Passing tests | Skipped Tests | Build Number
+| ------------- | ---------- | ---------- | ------------- | ------------- | ------------  | ------------
 | {{ .BuildResult }} | {{ .BuildTime }} | {{ .TestCount }}  | {{ .FailingTests }} | {{ .PassingTests }} | {{ .SkippedTests }} | {{ .BuildNumber }}
 
 {{ if .Tests | len }}
@@ -166,7 +166,7 @@ func (g *circleCiMsg) populateTestResults(ctx context.Context) (diffResultStruct
 				tr.Result = unitPass
 				s.PassingTests++
 			}
-			if circleTestResult.Result == "success" {
+			if circleTestResult.Result == "skip" {
 				tr.Result = unitSkip
 				s.SkippedTests++
 			}
