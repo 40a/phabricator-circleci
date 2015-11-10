@@ -1,7 +1,7 @@
 #!/bin/bash
 set -ex
 
-CIRCLEUTIL_TAG="v1.11"
+CIRCLEUTIL_TAG="v1.12"
 
 export GOPATH_INTO="$HOME/installed_gotools"
 export GOLANG_VERSION="1.5.1"
@@ -14,7 +14,8 @@ export CIRCLE_ARTIFACTS="${CIRCLE_ARTIFACTS-/tmp}"
 
 # Assumes that circleutil has been sourced
 function docker_tag() {
-  return "quay.io/signalfx/phabricator-circleci:$(docker_release_tag)$DOCKER_TAG_SUFFIX"
+  DOCKTAG=$(docker_release_tag "$CIRCLE_BRANCH")
+  return "quay.io/signalfx/phabricator-circleci:${DOCKTAG}$DOCKER_TAG_SUFFIX"
 }
 
 SRC_PATH="$GOPATH/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
