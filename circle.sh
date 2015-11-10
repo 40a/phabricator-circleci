@@ -28,8 +28,8 @@ function do_cache() {
     git reset --hard $CIRCLEUTIL_TAG
   )
   . "$HOME/circleutil/scripts/common.sh"
-  . "$HOME/circleutil/scripts/install_all_go_versions.sh"
-  . "$HOME/circleutil/scripts/versioned_goget.sh" "github.com/cep21/gobuild:v1.0"
+  "$HOME/circleutil/scripts/install_all_go_versions.sh"
+  "$HOME/circleutil/scripts/versioned_goget.sh" "github.com/cep21/gobuild:v1.0"
   copy_local_to_path "$SRC_PATH"
   (
     cd "$SRC_PATH"
