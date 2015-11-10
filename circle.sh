@@ -1,7 +1,7 @@
 #!/bin/bash
 set -ex
 
-CIRCLEUTIL_TAG="v1.12"
+CIRCLEUTIL_TAG="v1.13"
 
 export GOPATH_INTO="$HOME/installed_gotools"
 export GOLANG_VERSION="1.5.1"
@@ -11,6 +11,7 @@ export GOPATH="$HOME/.go_circle"
 export PATH="$GOROOT/bin:$GOPATH/bin:$GOPATH_INTO:$PATH"
 export IMPORT_PATH="github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
 export CIRCLE_ARTIFACTS="${CIRCLE_ARTIFACTS-/tmp}"
+export DOCKER_STORAGE="$HOME/docker_images"
 
 # Assumes that circleutil has been sourced
 function docker_tag() {
@@ -34,8 +35,11 @@ function do_cache() {
   copy_local_to_path "$SRC_PATH"
   (
     cd "$SRC_PATH"
+    load_docker_images
     CGO_ENABLED=0 go build -v -installsuffix .
     docker build -t "$(docker_tag)" .
+    cache_docker_image "$(docker_tag)" circlephab
+    mkdir -p ~/docker; docker save circleci/elasticsearch > ~/docker/image.tar
   )
 }
 
