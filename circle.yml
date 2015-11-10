@@ -1,13 +1,5 @@
 machine:
   environment:
-    GOLANG_VERSION: 1.5.1
-    GO15VENDOREXPERIMENT: 1
-    GOROOT: "$HOME/go"
-    GOPATH: "$HOME/.go"
-    CACHED_LINT_TOOLS_DIR: "$HOME/lints"
-    PATH: "$GOROOT/bin:$GOPATH/bin:$HOME/circleutil/scripts:$CACHED_LINT_TOOLS_DIR:$PATH"
-    IMPORT_PATH: "github.com/signalfx/phabricator-circleci"
-    SRC_PATH: "$GOPATH/src/$IMPORT_PATH"
     DOCKER_HOST: tcp://localhost:2375
     DOCKER_PUSH_ENABLED: 1
   services:
@@ -15,27 +7,20 @@ machine:
   pre:
     - echo 'DOCKER_OPTS="${DOCKER_OPTS} -H tcp://127.0.0.1:2375 -H unix:///var/run/docker.sock"' | sudo tee -a /etc/default/docker
 
-checkout:
-  post:
-    - git clone https://github.com/cep21/circleutil.git $HOME/circleutil
-
 dependencies:
   cache_directories:
     - ~/gover
-    - ~/lints
+    - ~/installed_gotools
   override:
-    - install_all_go_versions.sh
-    - install_lint_tools.sh
-    - rm -rf "$HOME/.go_workspace" "$HOME/.gradle" "$HOME/.ivy2" "$HOME/.m2"
+    - ./circle.sh cache
 
 test:
   override:
-    - copy_local_code_to_gopath.sh
-    - cd $SRC_PATH && ./circle_check.sh
+    - ./circle.sh test
 
 deployment:
   quay:
     branch: [master, release]
     commands:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS quay.io
-      - cd $SRC_PATH && ./circle_deploy.sh
+      - ./circle.sh deploy
