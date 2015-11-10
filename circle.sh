@@ -35,7 +35,7 @@ function do_cache() {
   (
     cd "$SRC_PATH"
     CGO_ENABLED=0 go build -v -installsuffix .
-    docker build -t "$(docker_tag)"
+    docker build -t "$(docker_tag)" .
   )
 }
 
