@@ -39,7 +39,6 @@ function do_cache() {
     CGO_ENABLED=0 go build -v -installsuffix .
     docker build -t "$(docker_tag)" .
     cache_docker_image "$(docker_tag)" circlephab
-    mkdir -p ~/docker; docker save circleci/elasticsearch > ~/docker/image.tar
   )
 }
 
