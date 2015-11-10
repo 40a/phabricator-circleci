@@ -15,7 +15,7 @@ export CIRCLE_ARTIFACTS="${CIRCLE_ARTIFACTS-/tmp}"
 # Assumes that circleutil has been sourced
 function docker_tag() {
   DOCKTAG=$(docker_release_tag "$CIRCLE_BRANCH")
-  return "quay.io/signalfx/phabricator-circleci:${DOCKTAG}$DOCKER_TAG_SUFFIX"
+  echo "quay.io/signalfx/phabricator-circleci:${DOCKTAG}$DOCKER_TAG_SUFFIX"
 }
 
 SRC_PATH="$GOPATH/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
