@@ -30,6 +30,7 @@ function do_cache() {
   . "$HOME/circleutil/scripts/common.sh"
   . "$HOME/circleutil/scripts/install_all_go_versions.sh"
   . "$HOME/circleutil/scripts/versioned_goget.sh" "github.com/cep21/gobuild:v1.0"
+  copy_local_to_path "$SRC_PATH"
   (
     cd "$SRC_PATH"
     CGO_ENABLED=0 go build -v -installsuffix .
