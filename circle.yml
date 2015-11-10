@@ -1,7 +1,7 @@
 machine:
   environment:
     DOCKER_HOST: tcp://localhost:2375
-    DOCKER_PUSH_ENABLED: 1
+    DOCKER_PUSH: 1
   services:
     - docker
   pre:
