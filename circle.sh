@@ -1,25 +1,23 @@
 #!/bin/bash
 set -ex
 
-CIRCLEUTIL_TAG="v1.15"
+CIRCLEUTIL_TAG="v1.27"
 
-export GOPATH_INTO="$HOME/installed_gotools"
 export GOLANG_VERSION="1.5.1"
-export GO15VENDOREXPERIMENT="1"
 export GOROOT="$HOME/go_circle"
 export GOPATH="$HOME/.go_circle"
+export GOPATH_INTO="$HOME/installed_gotools"
+export GO15VENDOREXPERIMENT="1"
 export PATH="$GOROOT/bin:$GOPATH/bin:$GOPATH_INTO:$PATH"
-export IMPORT_PATH="github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
-export CIRCLE_ARTIFACTS="${CIRCLE_ARTIFACTS-/tmp}"
 export DOCKER_STORAGE="$HOME/docker_images"
+export IMPORT_PATH="github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
 
-# Assumes that circleutil has been sourced
-function docker_tag() {
-  DOCKTAG=$(docker_release_tag "$CIRCLE_BRANCH")
-  echo "quay.io/signalfx/phabricator-circleci:${DOCKTAG}$DOCKER_TAG_SUFFIX"
+GO_COMPILER_PATH="$HOME/gover"
+SRC_PATH="$GOPATH/src/$IMPORT_PATH"
+
+function docker_url() {
+  echo -n "quay.io/signalfx/phabricator-circleci:$(docker_tag)"
 }
-
-SRC_PATH="$GOPATH/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
 
 function do_cache() {
   [ ! -d "$HOME/circleutil" ] && git clone https://github.com/signalfx/circleutil.git "$HOME/circleutil"
@@ -30,23 +28,30 @@ function do_cache() {
     git reset --hard $CIRCLEUTIL_TAG
   )
   . "$HOME/circleutil/scripts/common.sh"
-  . "$HOME/circleutil/scripts/install_all_go_versions.sh"
-  . "$HOME/circleutil/scripts/versioned_goget.sh" "github.com/cep21/gobuild:v1.0"
+  mkdir -p "$GO_COMPILER_PATH"
+  install_all_go_versions "$GO_COMPILER_PATH"
+  install_go_version "$GO_COMPILER_PATH" "$GOLANG_VERSION"
+  versioned_goget "github.com/cep21/gobuild:v1.0"
+  mkdir -p "$GOPATH_INTO"
+  install_shellcheck "$GOPATH_INTO"
+  gem install mdl
   copy_local_to_path "$SRC_PATH"
   (
     cd "$SRC_PATH"
     load_docker_images
     CGO_ENABLED=0 go build -v -installsuffix .
-    docker build -t "$(docker_tag)" .
-    cache_docker_image "$(docker_tag)" circlephab
+    docker build -t "$(docker_url)" .
+    cache_docker_image "$(docker_url)" circlephab
   )
 }
 
 function do_test() {
   . "$HOME/circleutil/scripts/common.sh"
-  copy_local_to_path "$SRC_PATH"
+  go version
+  go env
   (
     cd "$SRC_PATH"
+    shellcheck circle.sh
     gobuild -verbose -verbosefile "$CIRCLE_ARTIFACTS/gobuildout.txt"
   )
 }
@@ -56,7 +61,7 @@ function do_deploy() {
   (
     cd "$SRC_PATH"
     if [ "$DOCKER_PUSH" == "1" ]; then
-      docker push "$(docker_tag)"
+      docker push "$(docker_url)"
     fi
   )
 }
