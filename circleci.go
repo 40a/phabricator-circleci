@@ -166,7 +166,7 @@ func (g *circleCiMsg) populateTestResults(ctx context.Context) (diffResultStruct
 				tr.Result = unitPass
 				s.PassingTests++
 			}
-			if circleTestResult.Result == "skip" {
+			if circleTestResult.Result == "skipped" {
 				tr.Result = unitSkip
 				s.SkippedTests++
 			}
