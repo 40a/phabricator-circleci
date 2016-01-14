@@ -87,7 +87,7 @@ func init() {
 	flag.StringVar(&mainInstance.queueURL, "queue", os.Getenv("SQS_QUEUE"), "SQS queue URL")
 	flag.StringVar(&mainInstance.apiToken, "apitoken", os.Getenv("PHAB_API_TOKEN"), "Phabricator api token")
 	flag.StringVar(&mainInstance.circleToken, "circletoken", os.Getenv("CIRCLECI_TOKEN"), "Token to use for CircleCI")
-	flag.StringVar(&mainInstance.phaburl, "phaburl", "http://phabricator.corp.signalfx.com", "Phabricator URL")
+	flag.StringVar(&mainInstance.phaburl, "phaburl", os.Getenv("PHAB_URL"), "Phabricator URL")
 
 	defaultVerbose, _ := strconv.ParseBool(os.Getenv("BUILD_VERBOSE"))
 	flag.BoolVar(&mainInstance.verbose, "verbose", defaultVerbose, "Enable verbose logging")

@@ -32,6 +32,7 @@ will require the following env variables when run:
 | BUILD_VERBOSE_FILE  | Where to output your logs                            |
 | PHAB_API_TOKEN      | Phabricator API token                                |
 | CIRCLECI_TOKEN      | Token to talk to CircleCI                            |
+| PHAB_URL            | URL of phabricator to post build results             |
 
 Example env may look like this:
 
@@ -41,6 +42,7 @@ Example env may look like this:
 'SQS_QUEUE': 'https://sqs.us-east-1.amazonaws.com/111111111/some_name',
 'BUILD_VERBOSE_FILE': '/var/log/buildtrigger/buildtrigger.log.json',
 'PHAB_API_TOKEN': 'api-XYZYOUROTKENHERE',
+'PHAB_URL': 'http://myphab.mycompany.org',
 'CIRCLECI_TOKEN': '1312321XYZYOURTOKENHERE',
 ```
 
