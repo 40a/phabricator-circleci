@@ -2,19 +2,19 @@
 
 integration of phabricator and circleci
 
-# How to run
+## How to run
 
 The easiest way to run this is via the docker image listed above.  It
 will require the following env variables when run:
 
-| Variable  | Description  |
-|---|---|
-| SQS_REGION  | The region in AWS that your SQS queue is located in  |
-| BUILD_VERBOSE  | If 1, will enable verbose logging  |
-| SQS_QUEUE  | The AWS location of your SQS queue  |
-| BUILD_VERBOSE_FILE  | Where to output your logs  |
-| PHAB_API_TOKEN  | Phabricator API token  |
-| CIRCLEDI_TOKEN  | Token to talk to CircleCI  |
+| Variable            | Description  |
+|---------------------|------------------------------------------------------|
+| SQS_REGION          | The region in AWS that your SQS queue is located in  |
+| BUILD_VERBOSE       | If 1, will enable verbose logging                    |
+| SQS_QUEUE           | The AWS location of your SQS queue                   |
+| BUILD_VERBOSE_FILE  | Where to output your logs                            |
+| PHAB_API_TOKEN      | Phabricator API token                                |
+| CIRCLECI_TOKEN      | Token to talk to CircleCI                            |
 
 Example env may look like this:
 
@@ -24,27 +24,37 @@ Example env may look like this:
 'SQS_QUEUE': 'https://sqs.us-east-1.amazonaws.com/111111111/some_name',
 'BUILD_VERBOSE_FILE': '/var/log/buildtrigger/buildtrigger.log.json',
 'PHAB_API_TOKEN': 'api-XYZYOUROTKENHERE',
-'CIRCLEDI_TOKEN': '1312321XYZYOURTOKENHERE',
+'CIRCLECI_TOKEN': '1312321XYZYOURTOKENHERE',
 ```
 
-# Configure Phabricator to trigger the build
+## Configure Phabricator to trigger the build
 
-## Configure harbormaster to understand builds
+### Configure harbormaster to understand builds
 
-We use SQS as our way to communicate between phabricator and this circleci integration.  To enable this communication, setup a harbormaster build step in phabricator.  It should post to a URL that can accept the build trigger and should contain in the URL information similar to the following: ```https://xyz.execute-api.us-east-1.amazonaws.com/prod/xyzabc?phid=${target.phid}&diff=${buildable.diff}&revision=${buildable.revision}&staging_ref=${repository.staging.ref}&staging_uri=${repository.staging.uri}&callsign=${repository.callsign}```
+We use SQS as our way to communicate between phabricator and this circleci
+integration.  To enable this communication, setup a harbormaster build step
+in phabricator.  It should post to a URL that can accept the build trigger
+and should contain in the URL information similar to the following:
 
-## Configure Herald to trigger a build
+```https://xyz.execute-api.us-east-1.amazonaws.com/prod/xyzabc?phid=${target.phid}&diff=${buildable.diff}&revision=${buildable.revision}&staging_ref=${repository.staging.ref}&staging_uri=${repository.staging.uri}&callsign=${repository.callsign}```
 
-Herald will then trigger the build on a push.  Inside herald, create a condition that runs the build plan setup above whenever the repository is any repository you want to watch.
+### Configure Herald to trigger a build
 
-## Configure Diffusion to use a staging area
+Herald will then trigger the build on a push.  Inside herald, create a
+condition that runs the build plan setup above whenever the repository
+is any repository you want to watch.
 
-Inside phabricator's diffusion, setup a staging area for your application.  I generally have all applications share the same staging area
+### Configure Diffusion to use a staging area
 
-# Configure AWS lambda to store a SQS message
+Inside phabricator's diffusion, setup a staging area for youru
+application.  I generally have all applications share the same staging area.
+
+## Configure AWS lambda to store a SQS message
 
 To do this create a lambda function similar to the following:
+
 ```
+
 import json
 import boto3
 
@@ -54,16 +64,21 @@ def lambda_handler(event, context):
     queue = sqs.get_queue_by_name(QueueName='your_queue_name')
     response = queue.send_message(MessageBody=msg)
     return response
+
 ```
 
-You'll want to expose this on an API endpoint.  This API endpoint will be used by phabricator to trigger builds as well as CircleCI to signal a build is done.
+You'll want to expose this on an API endpoint.  This API endpoint will
+be used by phabricator to trigger builds as well as CircleCI to signal
+a build is done.
 
-# Configure circle.yml to notify SQS (via lambda) when a build is done
+## Configure circle.yml to notify SQS (via lambda) when a build is done
 
 This will be a final notify hook in your circle.yml file like the following:
 
 ```
+
 notify:
   webhooks:
     - url: https://xyzabcdefg.execute-api.us-east-1.amazonaws.com/prod/xyzabc
+
 ```
