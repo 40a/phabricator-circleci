@@ -36,7 +36,11 @@ integration.  To enable this communication, setup a harbormaster build step
 in phabricator.  It should post to a URL that can accept the build trigger
 and should contain in the URL information similar to the following:
 
-```https://xyz.execute-api.us-east-1.amazonaws.com/prod/xyzabc?phid=${target.phid}&diff=${buildable.diff}&revision=${buildable.revision}&staging_ref=${repository.staging.ref}&staging_uri=${repository.staging.uri}&callsign=${repository.callsign}```
+```
+
+https://xyz.execute-api.us-east-1.amazonaws.com/prod/xyzabc?phid=${target.phid}&diff=${buildable.diff}&revision=${buildable.revision}&staging_ref=${repository.staging.ref}&staging_uri=${repository.staging.uri}&callsign=${repository.callsign}
+
+```
 
 ### Configure Herald to trigger a build
 
