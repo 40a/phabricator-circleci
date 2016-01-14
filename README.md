@@ -29,10 +29,11 @@ Example env may look like this:
 
 # Configure Phabricator to trigger the build
 
-## Configure harbormaster
+## Configure harbormaster to understand builds
+
 We use SQS as our way to communicate between phabricator and this circleci integration.  To enable this communication, setup a harbormaster build step in phabricator.  It should post to a URL that can accept the build trigger and should contain in the URL information similar to the following: ```https://xyz.execute-api.us-east-1.amazonaws.com/prod/xyzabc?phid=${target.phid}&diff=${buildable.diff}&revision=${buildable.revision}&staging_ref=${repository.staging.ref}&staging_uri=${repository.staging.uri}&callsign=${repository.callsign}```
 
-## Configure Herald
+## Configure Herald to trigger a build
 
 Herald will then trigger the build on a push.  Inside herald, create a condition that runs the build plan setup above whenever the repository is any repository you want to watch.
 
