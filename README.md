@@ -5,19 +5,19 @@ integration of phabricator and circleci
 ## How this works
 
 1. Users run ```arc diff```
-2. Phabricator uploads their change to the staging area
-3. Herald triggers a harbormaster build
-  1. Harbormaster does a POST to Lambda, which puts a msg on SQS
-4. This code picks up that message
-  1. The staging area is moved from a tag to a branch
-  2. A build is triggered in CircleCI for this branch
-  3. The diff is updated that the build is happening
-5. CircleCI finishes the build and executes the notify step
-  1. Notify step does a POST to Lambda which puts a msg on SQS
-6. This code picks up that message
-  1. The staging area branch/tag is deleted
-  2. Harbormaster is updated with the build results
-  3. The diff is updated with the build results.
+1. Phabricator uploads their change to the staging area
+1. Herald triggers a harbormaster build
+   1. Harbormaster does a POST to Lambda, which puts a msg on SQS
+1. This code picks up that message
+   1. The staging area is moved from a tag to a branch
+   1. A build is triggered in CircleCI for this branch
+   1. The diff is updated that the build is happening
+1. CircleCI finishes the build and executes the notify step
+   1. Notify step does a POST to Lambda which puts a msg on SQS
+1. This code picks up that message
+   1. The staging area branch/tag is deleted
+   1. Harbormaster is updated with the build results
+   1. The diff is updated with the build results.
 
 ## How to run
 
