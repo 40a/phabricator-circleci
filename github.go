@@ -45,11 +45,11 @@ func (p *githubPusher) setupRepository(ctx context.Context, url string) error {
 func cloneDir(uri string) (string, error) {
 	parts1 := strings.Split(uri, "/")
 	if len(parts1) != 2 {
-		return "", fmt.Errorf("Unable to make uri out of %s", uri)
+		return "", fmt.Errorf("unable to make uri out of %s", uri)
 	}
 	parts2 := strings.Split(parts1[1], ".")
 	if len(parts2) != 2 {
-		return "", fmt.Errorf("Unable to make uri out of %s", uri)
+		return "", fmt.Errorf("unable to make uri out of %s", uri)
 	}
 	return parts2[0], nil
 }
@@ -57,11 +57,11 @@ func cloneDir(uri string) (string, error) {
 func circleProject(uri string) (string, error) {
 	parts1 := strings.Split(uri, ":")
 	if len(parts1) != 2 {
-		return "", fmt.Errorf("Unable to make circle project out of %s", uri)
+		return "", fmt.Errorf("unable to make circle project out of %s", uri)
 	}
 	parts2 := strings.Split(parts1[1], ".")
 	if len(parts2) != 2 {
-		return "", fmt.Errorf("Unable to make circle project out of %s", uri)
+		return "", fmt.Errorf("unable to make circle project out of %s", uri)
 	}
 	return parts2[0], nil
 }
