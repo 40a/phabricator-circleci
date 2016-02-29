@@ -76,6 +76,12 @@ is any repository you want to watch.
 Inside phabricator's diffusion, setup a staging area for youru
 application.  I generally have all applications share the same staging area.
 
+### Allow docker image to push to staging repository
+
+To allow this docker image to push to a staging repository, you can cross mount
+/root/.ssh inside the docker image to some directory on your running server that
+has a ssh key that can push to the staging repository.
+
 ## Configure AWS lambda to store a SQS message
 
 To do this create a lambda function similar to the following:
