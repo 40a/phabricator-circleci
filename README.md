@@ -46,6 +46,12 @@ Example env may look like this:
 'CIRCLECI_TOKEN': '1312321XYZYOURTOKENHERE',
 ```
 
+This code will also attempt to clean up branches in the phabricator staging
+area that are no longer needed.  To do this, it will probably need SSH access
+to the staging area git repository.  We do this by cross mounting a /root/.ssh
+for this docker image with a directory that contains a SSH key that allows
+read/write access to only our staging area.
+
 ## Configure Phabricator to trigger the build
 
 ### Configure harbormaster to understand builds
@@ -89,6 +95,31 @@ def lambda_handler(event, context):
 You'll want to expose this on an API endpoint.  This API endpoint will
 be used by phabricator to trigger builds as well as CircleCI to signal
 a build is done.
+
+I expose this endpoint via the API gateway. Forward the query strings
+`diff`, `revision`, `auth`, and `phid`.  And map the content types
+`application/json` and `application/x-www-form-urlencoded` to code like
+the following:
+
+```
+#set($params = $input.params())
+{
+    "formparams" : $input.json('$'),
+    "allParamsJson" : {
+    #foreach($type in $params.keySet())
+    "$type" : {
+            #foreach($paramName in $params.get($type).keySet())
+                "$paramName" : "$util.escapeJavaScript($params.get($type).get($paramName))"
+                #if($foreach.hasNext),
+                #end
+            #end
+        }
+    #if($foreach.hasNext),
+    #end
+    #end
+    }
+}
+```
 
 ## Configure circle.yml to notify SQS (via lambda) when a build is done
 
