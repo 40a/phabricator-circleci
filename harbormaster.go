@@ -72,7 +72,7 @@ func (g *harbormasterMessage) Execute(ctx context.Context) error {
 	if err != nil {
 		return wraperr(err, "cannot post a scheduled bulid for %s", ref)
 	}
-	msg := fmt.Sprintf("Your revision is building in CirlceCI.  Build URL: %s", resp.BuildURL)
+	msg := fmt.Sprintf("Your revision is building in CircleCI at %s", resp.BuildURL)
 
 	err = g.gp.phab.createComment(
 		ctx,
